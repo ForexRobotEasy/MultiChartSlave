@@ -1,0 +1,136 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                                     MultiChartSlave|
+//|                                   Developer's Site: forexroboteasy.com|
+//|                                                  Developed by: Forex Robot Easy Team|
+//|------------------------------------------------------------------|
+//|                                 This program integrates the MultiChartSlave Forex Software|
+//|                     with the MultiChart Master Tool EA to enhance trading capabilities.|
+//|------------------------------------------------------------------|
+//|                                     Terms of Reference:|
+//|1. Integrate MultiChartSlave Forex Software with MultiChart Master Tool EA|
+//|2. Implement Symbol Panel in Master Tool EA for easy navigation between charts|
+//|3. Auto-adjust Slave Indicator charts when trader shifts to another symbol|
+//|4. Develop alert system for Zones and Levels in Master Tool EA|
+//|5. Customizable and configurable alert system|
+//|6. Implement trading functions for seamless trading and analysis|
+//|7. Enhance trading process and support various trading strategies|
+//|8. Optimize code for fast execution|
+//|9. Thoroughly test software for reliability and stability|
+//|10. Provide detailed documentation on code implementation and usage|
+//+------------------------------------------------------------------+
+
+#property copyright 'Forex Robot Easy Team'
+#property link      'forexroboteasy.com'
+
+//+------------------------------------------------------------------+
+//|                              Global Variables                     |
+//+------------------------------------------------------------------+
+input int SymbolPanelX = 10;      // X-position of Symbol Panel
+input int SymbolPanelY = 10;      // Y-position of Symbol Panel
+input int SymbolPanelWidth = 200; // Width of Symbol Panel
+input int SymbolPanelHeight = 400;// Height of Symbol Panel
+
+bool isChartChanged = false;     // Flag to track chart change
+
+//+------------------------------------------------------------------+
+//|                           Custom Indicator                        |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Attach custom indicator to the chart
+    if (!ChartIndicatorAdd(0, 'MultiChartSlave.ex5'))
+    {
+        Print('Failed to attach MultiChartSlave.ex5 indicator to the chart!');
+        return INIT_FAILED;
+    }
+    
+    ChartApplyTemplate(0, 'Default.tpl'); // Apply default template to the chart
+    
+    return INIT_SUCCEEDED;
+}
+
+void OnDeinit(const int reason)
+{
+    // Detach custom indicator from the chart
+    ChartIndicatorDelete(0, 'MultiChartSlave.ex5');
+}
+
+//+------------------------------------------------------------------+
+//|                     Symbol Panel Functions                        |
+//+------------------------------------------------------------------+
+void DrawSymbolPanel()
+{
+    // Draw Symbol Panel at specified position and size
+    ObjectCreate(0, 'SymbolPanel', OBJ_RECTANGLE_LABEL, 0, 0, 0);
+    ObjectSetInteger(0, 'SymbolPanel', OBJPROP_XDISTANCE, SymbolPanelX);
+    ObjectSetInteger(0, 'SymbolPanel', OBJPROP_YDISTANCE, SymbolPanelY);
+    ObjectSetInteger(0, 'SymbolPanel', OBJPROP_WIDTH, SymbolPanelWidth);
+    ObjectSetInteger(0, 'SymbolPanel', OBJPROP_HEIGHT, SymbolPanelHeight);
+    ObjectSetString(0, 'SymbolPanel', OBJPROP_TEXT, 'Symbol Panel');
+    ObjectSetInteger(0, 'SymbolPanel', OBJPROP_COLOR, clrWhite);
+}
+
+void OnChartChange()
+{
+    if (!isChartChanged) // Check if chart change event occurred
+    {
+        // Perform necessary actions when chart is changed
+        isChartChanged = true;
+        
+        // Adjust Slave Indicator charts
+        AdjustSlaveIndicators();
+    }
+}
+
+void AdjustSlaveIndicators()
+{
+    // Code to adjust Slave Indicator charts when symbol is changed
+}
+
+//+------------------------------------------------------------------+
+//|                     Alert System Functions                         |
+//+------------------------------------------------------------------+
+void ShowAlert(const string message)
+{
+    // Code to show alert based on the message
+}
+
+void ConfigureAlertSystem()
+{
+    // Code to configure the alert system
+}
+
+//+------------------------------------------------------------------+
+//|                      Trading Functions                             |
+//+------------------------------------------------------------------+
+void ExecuteTrade()
+{
+    // Code to execute trade based on trading strategy
+}
+
+void AnalyzeMarket()
+{
+    // Code to analyze market based on trading strategy
+}
+
+//+------------------------------------------------------------------+
+//|                     Main Program Functions                         |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    // Code to handle tick events
+    ExecuteTrade();
+    AnalyzeMarket();
+}
+
+void OnStart()
+{
+    // Code to initialize the program
+    DrawSymbolPanel();
+    ConfigureAlertSystem();
+}
+
+//+------------------------------------------------------------------+
+//|                      End of Program                                |
+//+------------------------------------------------------------------+
